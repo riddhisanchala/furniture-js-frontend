@@ -1,0 +1,535 @@
+
+const products = [
+    {
+        id: "image-one",
+        image: "./Image/image 1168.svg  ",
+        title: "Cantilever chair",
+        colors: ["#05E6B7", "#F701A8", "#00009D"],
+        code: "Y523201",
+        price: " $ 42.00"
+    },
+    {
+        id: "image-two",
+        image: "./Image/image 1.svg",
+        title: "Cantilever chair",
+        colors: ["#05E6B7", "#F701A8", "#00009D"],
+        code: "Y523201",
+        price: " $ 42.00"
+    },
+    {
+        id: "image-three",
+        image: "./Image/image 1169.svg",
+        title: "Cantilever chair",
+        colors: ["#05E6B7", "#F701A8", "#00009D"],
+        code: "Y523201",
+        price: " $ 42.00"
+    },
+    {
+        id: "image-four",
+        image: "./Image/image 3.svg",
+        title: "Cantilever chair",
+        colors: [" #05E6B7", " #F701A8", " #00009D"],
+        code: "Y523201",
+        price: " $ 42.00"
+    }
+];
+// WISHLIST
+// ✅ Get current user
+function getCurrentUser() {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    return user && user.email ? user : null;
+}
+
+// ✅ Generate user-wise key
+function getWishlistKey() {
+    const user = getCurrentUser();
+    return user ? `wishlist_${user.email}` : "wishlist_guest";
+}
+
+// ✅ Get wishlist
+function getWishlist() {
+    return JSON.parse(localStorage.getItem(getWishlistKey())) || [];
+}
+
+// ✅ Check item
+function isInWishlist(id) {
+    let wishlist = getWishlist();
+    return wishlist.some(item => String(item.id) === String(id));
+}
+
+// ✅ Toggle wishlist
+function toggleWishlist(product, el) {
+    const user = getCurrentUser();
+
+    // 🔐 login check
+    if (!user) {
+        alert("Please login first");
+        window.location.href = "./My_account.html";
+        return;
+    }
+
+    let wishlist = getWishlist();
+
+    const index = wishlist.findIndex(item =>
+        String(item.id) === String(product.id)
+    );
+
+    const icon = el.querySelector("svg");
+
+    if (index === -1) {
+        wishlist.push(product);
+        if (icon) icon.classList.add("active"); // ❤️ red
+    } else {
+        wishlist.splice(index, 1);
+        if (icon) icon.classList.remove("active"); // 🤍 gray
+    }
+
+    localStorage.setItem(getWishlistKey(), JSON.stringify(wishlist));
+
+    console.log("Saved in:", getWishlistKey());
+    console.log("Data:", wishlist);
+}
+// MAGNIFIER
+function openQuickView(index, source) {
+
+    let product;
+
+    if (source === "products") {
+        const item = products[index];
+
+        product = {
+            img: item.image,
+            name: item.title,
+            price: item.price
+        };
+
+    } else if (source === "latest") {
+        const item = latest[index];
+
+        product = {
+            img: item.chair_img,
+            name: item.craft,
+            price: item.discount_price
+        };
+    }
+
+    const modal = document.getElementById("quickViewModal");
+    const content = document.getElementById("modalContent");
+
+    content.innerHTML = `
+        <img src="${product.img}" />
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+        <button onclick='addToCart(${JSON.stringify(product)})'>
+            Add to Cart
+        </button>
+    `;
+
+    modal.style.display = "flex";
+}
+
+function closeQuickView() {
+    document.getElementById("quickViewModal").style.display = "none";
+}
+const productList = document.getElementById("box_item");
+
+productList.innerHTML = products?.map((product, index) => `
+ 
+                    <div class="card"  onclick="viewDetailsHome('${product.id}')">
+                        <div class="bg_color">
+                            <div class="p-2 icons">
+                            <span style="cursor:pointer;" onclick="event.stopPropagation(); addToCart({name:'${product.title}', img:'${product.image}', discount_price:'${product.price}'}, false)">
+
+                                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M1.97925 3.36456C1.97925 3.20709 2.0418 3.05607 2.15315 2.94472C2.2645 2.83337 2.41553 2.77081 2.573 2.77081H3.01475C3.76683 2.77081 4.21808 3.27669 4.47537 3.74694C4.64716 4.06044 4.77146 4.42381 4.86883 4.75315C4.89517 4.75107 4.92158 4.75001 4.948 4.74998H14.8422C15.4993 4.74998 15.9743 5.37856 15.7938 6.0111L14.3467 11.0849C14.2169 11.54 13.9424 11.9404 13.5647 12.2255C13.187 12.5107 12.7267 12.665 12.2535 12.6651H7.54466C7.06768 12.6651 6.60389 12.5085 6.22458 12.2193C5.84527 11.93 5.57144 11.5243 5.44516 11.0643L4.8435 8.86981L3.846 5.50681L3.84521 5.50048C3.72171 5.0516 3.60612 4.63123 3.43354 4.31773C3.26808 4.01294 3.13508 3.95831 3.01554 3.95831H2.573C2.41553 3.95831 2.2645 3.89576 2.15315 3.78441C2.0418 3.67306 1.97925 3.52204 1.97925 3.36456ZM5.99537 8.58165L6.58992 10.75C6.70866 11.1791 7.09896 11.4776 7.54466 11.4776H12.2535C12.4686 11.4776 12.6778 11.4075 12.8495 11.2779C13.0212 11.1483 13.1461 10.9664 13.2051 10.7595L14.5802 5.93748H5.21321L5.98429 8.53969L5.99537 8.58165Z"
+                                        fill="#2F1AC4" />
+                                    <path
+                                        d="M8.70842 15.0416C8.70842 15.4616 8.5416 15.8643 8.24467 16.1612C7.94773 16.4582 7.54501 16.625 7.12508 16.625C6.70516 16.625 6.30243 16.4582 6.0055 16.1612C5.70856 15.8643 5.54175 15.4616 5.54175 15.0416C5.54175 14.6217 5.70856 14.219 6.0055 13.9221C6.30243 13.6251 6.70516 13.4583 7.12508 13.4583C7.54501 13.4583 7.94773 13.6251 8.24467 13.9221C8.5416 14.219 8.70842 14.6217 8.70842 15.0416ZM7.52092 15.0416C7.52092 14.9367 7.47921 14.836 7.40498 14.7617C7.33075 14.6875 7.23006 14.6458 7.12508 14.6458C7.0201 14.6458 6.91942 14.6875 6.84518 14.7617C6.77095 14.836 6.72925 14.9367 6.72925 15.0416C6.72925 15.1466 6.77095 15.2473 6.84518 15.3215C6.91942 15.3958 7.0201 15.4375 7.12508 15.4375C7.23006 15.4375 7.33075 15.3958 7.40498 15.3215C7.47921 15.2473 7.52092 15.1466 7.52092 15.0416Z"
+                                        fill="#2F1AC4" />
+                                    <path
+                                        d="M14.2502 15.0416C14.2502 15.4616 14.0833 15.8643 13.7864 16.1612C13.4895 16.4582 13.0868 16.625 12.6668 16.625C12.2469 16.625 11.8442 16.4582 11.5472 16.1612C11.2503 15.8643 11.0835 15.4616 11.0835 15.0416C11.0835 14.6217 11.2503 14.219 11.5472 13.9221C11.8442 13.6251 12.2469 13.4583 12.6668 13.4583C13.0868 13.4583 13.4895 13.6251 13.7864 13.9221C14.0833 14.219 14.2502 14.6217 14.2502 15.0416ZM13.0627 15.0416C13.0627 14.9367 13.021 14.836 12.9467 14.7617C12.8725 14.6875 12.7718 14.6458 12.6668 14.6458C12.5618 14.6458 12.4612 14.6875 12.3869 14.7617C12.3127 14.836 12.271 14.9367 12.271 15.0416C12.271 15.1466 12.3127 15.2473 12.3869 15.3215C12.4612 15.3958 12.5618 15.4375 12.6668 15.4375C12.7718 15.4375 12.8725 15.3958 12.9467 15.3215C13.021 15.2473 13.0627 15.1466 13.0627 15.0416Z"
+                                        fill="#2F1AC4" />
+                                </svg>
+                            </span>
+                           <a  
+                                onclick='event.stopPropagation(); toggleWishlist(${JSON.stringify(product)} , this )'>
+
+                                <svg class="heart-icon ${isInWishlist(product.id) ? 'active' : ''}" 
+                                width="15" height="15" viewBox="0 0 15 15" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.28 2.26539C12.528 1.51314 11.531 1.05578 10.4702 0.97649C9.40951 0.897195 8.35555 1.20123 7.50003 1.8333C6.59879 1.16296 5.47703 0.858999 4.36064 0.982621C3.24426 1.10624 2.21618 1.64827 1.48343 2.49955C0.750683 3.35083 0.367698 4.44813 0.4116 5.57048C0.455502 6.69283 0.923028 7.75686 1.72003 8.5483L6.99712 13.8254C7.06296 13.8918 7.14131 13.9445 7.22762 13.9804C7.31394 14.0164 7.40652 14.0349 7.50003 14.0349C7.59354 14.0349 7.68612 14.0164 7.77244 13.9804C7.85876 13.9445 7.9371 13.8918 8.00295 13.8254L13.28 8.5483C13.6927 8.13586 14.0201 7.64613 14.2435 7.1071C14.4669 6.56808 14.5819 5.99032 14.5819 5.40684C14.5819 4.82337 14.4669 4.24561 14.2435 3.70659C14.0201 3.16756 13.6927 2.67783 13.28 2.26539ZM12.2813 7.54955L7.50003 12.3237L2.71878 7.54955C2.29745 7.12646 2.01043 6.58838 1.89374 6.00279C1.77704 5.41721 1.83587 4.8102 2.06283 4.25792C2.2898 3.70564 2.67479 3.23268 3.16953 2.89837C3.66426 2.56406 4.2467 2.38328 4.84378 2.37872C5.64145 2.38067 6.40573 2.69912 6.96878 3.26414C7.03463 3.33053 7.11297 3.38322 7.19929 3.41918C7.28561 3.45515 7.37819 3.47366 7.4717 3.47366C7.56521 3.47366 7.65779 3.45515 7.74411 3.41918C7.83042 3.38322 7.90877 3.33053 7.97462 3.26414C8.55426 2.76184 9.30309 2.49853 10.0695 2.52749C10.836 2.55644 11.5628 2.87551 12.1029 3.4201C12.643 3.9647 12.956 4.69415 12.9786 5.46081C13.0012 6.22748 12.7317 6.97409 12.2246 7.54955H12.2813Z"
+                                        fill="currentColor" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear_2793_1637" x1="0.408203" y1="0.955627"
+                                            x2="13.4454" y2="15.0837" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#1389FF" />
+                                            <stop offset="1" stop-color="#1DB4E7" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </a>
+                            <a href="#" onclick="event.preventDefault(); event.stopPropagation(); openQuickView(${index}, 'products')">
+                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.37512 6.25H7.50012V4.375C7.50012 4.20924 7.43428 4.05027 7.31707 3.93306C7.19985 3.81585 7.04088 3.75 6.87512 3.75C6.70936 3.75 6.55039 3.81585 6.43318 3.93306C6.31597 4.05027 6.25012 4.20924 6.25012 4.375V6.25H4.37512C4.20936 6.25 4.05039 6.31585 3.93318 6.43306C3.81597 6.55027 3.75012 6.70924 3.75012 6.875C3.75012 7.04076 3.81597 7.19973 3.93318 7.31694C4.05039 7.43415 4.20936 7.5 4.37512 7.5H6.25012V9.375C6.25012 9.54076 6.31597 9.69973 6.43318 9.81694C6.55039 9.93415 6.70936 10 6.87512 10C7.04088 10 7.19985 9.93415 7.31707 9.81694C7.43428 9.69973 7.50012 9.54076 7.50012 9.375V7.5H9.37512C9.54088 7.5 9.69985 7.43415 9.81707 7.31694C9.93428 7.19973 10.0001 7.04076 10.0001 6.875C10.0001 6.70924 9.93428 6.55027 9.81707 6.43306C9.69985 6.31585 9.54088 6.25 9.37512 6.25ZM13.5689 12.6813L11.2501 10.3813C12.1502 9.25901 12.5861 7.83456 12.4681 6.40081C12.3502 4.96706 11.6874 3.63299 10.6161 2.6729C9.54473 1.71282 8.14625 1.1997 6.7082 1.23905C5.27015 1.2784 3.90182 1.86723 2.88459 2.88446C1.86735 3.9017 1.27852 5.27003 1.23917 6.70808C1.19982 8.14613 1.71294 9.54461 2.67303 10.616C3.63311 11.6873 4.96719 12.3501 6.40094 12.468C7.83468 12.5859 9.25913 12.1501 10.3814 11.25L12.6814 13.55C12.7395 13.6086 12.8086 13.6551 12.8848 13.6868C12.9609 13.7185 13.0426 13.7349 13.1251 13.7349C13.2076 13.7349 13.2893 13.7185 13.3655 13.6868C13.4416 13.6551 13.5108 13.6086 13.5689 13.55C13.6815 13.4335 13.7445 13.2777 13.7445 13.1156C13.7445 12.9535 13.6815 12.7978 13.5689 12.6813ZM6.87512 11.25C6.00983 11.25 5.16397 10.9934 4.4445 10.5127C3.72504 10.0319 3.16428 9.34867 2.83315 8.54924C2.50202 7.74981 2.41538 6.87015 2.58419 6.02148C2.753 5.17281 3.16968 4.39326 3.78153 3.78141C4.39339 3.16955 5.17294 2.75288 6.0216 2.58407C6.87027 2.41526 7.74994 2.50189 8.54936 2.83303C9.34879 3.16416 10.0321 3.72492 10.5128 4.44438C10.9935 5.16385 11.2501 6.00971 11.2501 6.875C11.2501 8.03532 10.7892 9.14812 9.96872 9.96859C9.14824 10.7891 8.03545 11.25 6.87512 11.25Z"
+                                        fill="url(#paint0_linear_2793_1638)" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear_2793_1638" x1="1.23706" y1="1.23694"
+                                            x2="13.735" y2="13.7444" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#1389FF" />
+                                            <stop offset="1" stop-color="#1DB4E7" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </a>
+                                
+
+                            </div>
+                            <div class="IMAGE">
+                                <img src="${product.image}" alt="${product.title} "id="${product.id}">
+                            </div>
+                            
+                            <div class="Detail_btn"><a href="./product-detail.html" >
+                                <button type="submit">View Details</button>
+                                
+                            </div>
+                        </div>
+                        <div class="product_detail">
+                            <h4>${product.title}</h4>
+                            <div class="colors">
+                                <div class="color-one"></div>
+                                <div class="color-two"></div>
+                                <div class="color-three"></div>
+                            </div>
+                            <p>Code: ${product.code}</p>
+                            <p class="price">${product.price}</p>
+                        </div>
+                        </a>
+                    </div> 
+`).join('');
+
+function viewDetailsHome(productId_one) {
+
+    const product_show = products.find(p => p.id === productId_one);
+
+    localStorage.setItem("selectedProduct_one", JSON.stringify(product_show));
+}
+
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_left");
+localStorage.removeItem("selectedProduct_four");
+localStorage.removeItem("selectedProduct_three");
+localStorage.removeItem("selectedProduct_two");
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("BlogProductDetail");
+
+
+
+
+let latest = [
+    {
+        id: "latest-1",
+        category: "new",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image 1166.svg",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    },
+    {
+        id: "latest-2",
+        category: "best",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image-15.2.png",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    },
+    {
+        id: "latest-3",
+        category: "featured",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image 1168.svg",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    },
+    {
+        id: "latest-4",
+        category: "offer",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image 23.svg",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    },
+    {
+        id: "latest-5",
+        category: "best",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image-c 32.svg",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    },
+    {
+        id: "latest-6",
+        category: "new",
+        sale: "./Image/Group 27.svg",
+        chair_img: "./Image/image 3.svg",
+        craft: "Comfort Handy Craft",
+        discount_price: "$42.00",
+        original_price: "$65.00"
+    }
+];
+console.log(latest);
+
+// function viewDetailsHome_one(item) {
+//     console.log(item);
+//     const product_showghg = latest.find((ele, idx) => item == idx);
+//     localStorage.setItem("selectedProduct_two", JSON.stringify(product_showghg));
+// }
+// localStorage.removeItem("selectedProduct");
+// localStorage.removeItem("selectedProduct_left");
+// localStorage.removeItem("selectedProduct_four");
+// localStorage.removeItem("selectedProduct_three");
+// localStorage.removeItem("selectedProduct_one");
+// localStorage.removeItem("selectedProduct");
+// localStorage.removeItem("selectedProduct_shop");
+// localStorage.removeItem("BlogProductDetail");
+
+
+
+
+
+let latestData = document.getElementById("chair_item");
+
+function updateUi(data) {
+    latestData.innerHTML = data?.map((ele, idx) => {
+
+        console.log(ele)
+        return (`
+       <div class="chair_detail"  onclick="viewDetailsHome_one('${idx}')">
+                        <div class="background">
+                            <div class=" sale">
+                                <img src="${ele.sale}" alt="Image is not found">
+                            </div>
+                            <div class="chair_img">
+                                <img src="${ele.chair_img}" alt="Image is not found" id="image-five"> 
+                            </div>
+                            <div class="product_icon">
+                            <span style="cursor:pointer;" onclick="event.stopPropagation(); addToCart({name:'${ele.craft}', img:'${ele.chair_img}', discount_price:'${ele.discount_price}'}, false)">
+
+                                    <svg width="19" height="19" viewBox="0 0name 19 19" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path  
+                                        d="M1.97925 3.36456C1.97925 3.20709 2.0418 3.05607 2.15315 2.94472C2.2645 2.83337 2.41553 2.77081 2.573 2.77081H3.01475C3.76683 2.77081 4.21808 3.27669 4.47537 3.74694C4.64716 4.06044 4.77146 4.42381 4.86883 4.75315C4.89517 4.75107 4.92158 4.75001 4.948 4.74998H14.8422C15.4993 4.74998 15.9743 5.37856 15.7938 6.0111L14.3467 11.0849C14.2169 11.54 13.9424 11.9404 13.5647 12.2255C13.187 12.5107 12.7267 12.665 12.2535 12.6651H7.54466C7.06768 12.6651 6.60389 12.5085 6.22458 12.2193C5.84527 11.93 5.57144 11.5243 5.44516 11.0643L4.8435 8.86981L3.846 5.50681L3.84521 5.50048C3.72171 5.0516 3.60612 4.63123 3.43354 4.31773C3.26808 4.01294 3.13508 3.95831 3.01554 3.95831H2.573C2.41553 3.95831 2.2645 3.89576 2.15315 3.78441C2.0418 3.67306 1.97925 3.52204 1.97925 3.36456ZM5.99537 8.58165L6.58992 10.75C6.70866 11.1791 7.09896 11.4776 7.54466 11.4776H12.2535C12.4686 11.4776 12.6778 11.4075 12.8495 11.2779C13.0212 11.1483 13.1461 10.9664 13.2051 10.7595L14.5802 5.93748H5.21321L5.98429 8.53969L5.99537 8.58165Z"
+                                        fill="#2F1AC4" />
+                                    <path
+                                        d="M8.70842 15.0416C8.70842 15.4616 8.5416 15.8643 8.24467 16.1612C7.94773 16.4582 7.54501 16.625 7.12508 16.625C6.70516 16.625 6.30243 16.4582 6.0055 16.1612C5.70856 15.8643 5.54175 15.4616 5.54175 15.0416C5.54175 14.6217 5.70856 14.219 6.0055 13.9221C6.30243 13.6251 6.70516 13.4583 7.12508 13.4583C7.54501 13.4583 7.94773 13.6251 8.24467 13.9221C8.5416 14.219 8.70842 14.6217 8.70842 15.0416ZM7.52092 15.0416C7.52092 14.9367 7.47921 14.836 7.40498 14.7617C7.33075 14.6875 7.23006 14.6458 7.12508 14.6458C7.0201 14.6458 6.91942 14.6875 6.84518 14.7617C6.77095 14.836 6.72925 14.9367 6.72925 15.0416C6.72925 15.1466 6.77095 15.2473 6.84518 15.3215C6.91942 15.3958 7.0201 15.4375 7.12508 15.4375C7.23006 15.4375 7.33075 15.3958 7.40498 15.3215C7.47921 15.2473 7.52092 15.1466 7.52092 15.0416Z"
+                                        fill="#2F1AC4" />
+                                    <path
+                                        d="M14.2502 15.0416C14.2502 15.4616 14.0833 15.8643 13.7864 16.1612C13.4895 16.4582 13.0868 16.625 12.6668 16.625C12.2469 16.625 11.8442 16.4582 11.5472 16.1612C11.2503 15.8643 11.0835 15.4616 11.0835 15.0416C11.0835 14.6217 11.2503 14.219 11.5472 13.9221C11.8442 13.6251 12.2469 13.4583 12.6668 13.4583C13.0868 13.4583 13.4895 13.6251 13.7864 13.9221C14.0833 14.219 14.2502 14.6217 14.2502 15.0416ZM13.0627 15.0416C13.0627 14.9367 13.021 14.836 12.9467 14.7617C12.8725 14.6875 12.7718 14.6458 12.6668 14.6458C12.5618 14.6458 12.4612 14.6875 12.3869 14.7617C12.3127 14.836 12.271 14.9367 12.271 15.0416C12.271 15.1466 12.3127 15.2473 12.3869 15.3215C12.4612 15.3958 12.5618 15.4375 12.6668 15.4375C12.7718 15.4375 12.8725 15.3958 12.9467 15.3215C13.021 15.2473 13.0627 15.1466 13.0627 15.0416Z"
+                                        fill="#2F1AC4" />
+                                </svg>
+                            </span>
+                            <a  
+                                onclick='event.stopPropagation(); toggleWishlist(${JSON.stringify(ele)} , this)'>
+
+                                <svg class="heart-icon ${isInWishlist(ele.id) ? 'active' : ''}" 
+                                width="15" height="15" viewBox="0 0 15 15" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.28 2.26539C12.528 1.51314 11.531 1.05578 10.4702 0.97649C9.40951 0.897195 8.35555 1.20123 7.50003 1.8333C6.59879 1.16296 5.47703 0.858999 4.36064 0.982621C3.24426 1.10624 2.21618 1.64827 1.48343 2.49955C0.750683 3.35083 0.367698 4.44813 0.4116 5.57048C0.455502 6.69283 0.923028 7.75686 1.72003 8.5483L6.99712 13.8254C7.06296 13.8918 7.14131 13.9445 7.22762 13.9804C7.31394 14.0164 7.40652 14.0349 7.50003 14.0349C7.59354 14.0349 7.68612 14.0164 7.77244 13.9804C7.85876 13.9445 7.9371 13.8918 8.00295 13.8254L13.28 8.5483C13.6927 8.13586 14.0201 7.64613 14.2435 7.1071C14.4669 6.56808 14.5819 5.99032 14.5819 5.40684C14.5819 4.82337 14.4669 4.24561 14.2435 3.70659C14.0201 3.16756 13.6927 2.67783 13.28 2.26539ZM12.2813 7.54955L7.50003 12.3237L2.71878 7.54955C2.29745 7.12646 2.01043 6.58838 1.89374 6.00279C1.77704 5.41721 1.83587 4.8102 2.06283 4.25792C2.2898 3.70564 2.67479 3.23268 3.16953 2.89837C3.66426 2.56406 4.2467 2.38328 4.84378 2.37872C5.64145 2.38067 6.40573 2.69912 6.96878 3.26414C7.03463 3.33053 7.11297 3.38322 7.19929 3.41918C7.28561 3.45515 7.37819 3.47366 7.4717 3.47366C7.56521 3.47366 7.65779 3.45515 7.74411 3.41918C7.83042 3.38322 7.90877 3.33053 7.97462 3.26414C8.55426 2.76184 9.30309 2.49853 10.0695 2.52749C10.836 2.55644 11.5628 2.87551 12.1029 3.4201C12.643 3.9647 12.956 4.69415 12.9786 5.46081C13.0012 6.22748 12.7317 6.97409 12.2246 7.54955H12.2813Z"
+                                        fill="currentColor" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear_2793_1637" x1="0.408203" y1="0.955627"
+                                            x2="13.4454" y2="15.0837" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#1389FF" />
+                                            <stop offset="1" stop-color="#1DB4E7" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </a>
+                           <a href="#" onclick="event.preventDefault(); event.stopPropagation(); openQuickView(${idx}, 'latest')">
+                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.37512 6.25H7.50012V4.375C7.50012 4.20924 7.43428 4.05027 7.31707 3.93306C7.19985 3.81585 7.04088 3.75 6.87512 3.75C6.70936 3.75 6.55039 3.81585 6.43318 3.93306C6.31597 4.05027 6.25012 4.20924 6.25012 4.375V6.25H4.37512C4.20936 6.25 4.05039 6.31585 3.93318 6.43306C3.81597 6.55027 3.75012 6.70924 3.75012 6.875C3.75012 7.04076 3.81597 7.19973 3.93318 7.31694C4.05039 7.43415 4.20936 7.5 4.37512 7.5H6.25012V9.375C6.25012 9.54076 6.31597 9.69973 6.43318 9.81694C6.55039 9.93415 6.70936 10 6.87512 10C7.04088 10 7.19985 9.93415 7.31707 9.81694C7.43428 9.69973 7.50012 9.54076 7.50012 9.375V7.5H9.37512C9.54088 7.5 9.69985 7.43415 9.81707 7.31694C9.93428 7.19973 10.0001 7.04076 10.0001 6.875C10.0001 6.70924 9.93428 6.55027 9.81707 6.43306C9.69985 6.31585 9.54088 6.25 9.37512 6.25ZM13.5689 12.6813L11.2501 10.3813C12.1502 9.25901 12.5861 7.83456 12.4681 6.40081C12.3502 4.96706 11.6874 3.63299 10.6161 2.6729C9.54473 1.71282 8.14625 1.1997 6.7082 1.23905C5.27015 1.2784 3.90182 1.86723 2.88459 2.88446C1.86735 3.9017 1.27852 5.27003 1.23917 6.70808C1.19982 8.14613 1.71294 9.54461 2.67303 10.616C3.63311 11.6873 4.96719 12.3501 6.40094 12.468C7.83468 12.5859 9.25913 12.1501 10.3814 11.25L12.6814 13.55C12.7395 13.6086 12.8086 13.6551 12.8848 13.6868C12.9609 13.7185 13.0426 13.7349 13.1251 13.7349C13.2076 13.7349 13.2893 13.7185 13.3655 13.6868C13.4416 13.6551 13.5108 13.6086 13.5689 13.55C13.6815 13.4335 13.7445 13.2777 13.7445 13.1156C13.7445 12.9535 13.6815 12.7978 13.5689 12.6813ZM6.87512 11.25C6.00983 11.25 5.16397 10.9934 4.4445 10.5127C3.72504 10.0319 3.16428 9.34867 2.83315 8.54924C2.50202 7.74981 2.41538 6.87015 2.58419 6.02148C2.753 5.17281 3.16968 4.39326 3.78153 3.78141C4.39339 3.16955 5.17294 2.75288 6.0216 2.58407C6.87027 2.41526 7.74994 2.50189 8.54936 2.83303C9.34879 3.16416 10.0321 3.72492 10.5128 4.44438C10.9935 5.16385 11.2501 6.00971 11.2501 6.875C11.2501 8.03532 10.7892 9.14812 9.96872 9.96859C9.14824 10.7891 8.03545 11.25 6.87512 11.25Z"
+                                        fill="url(#paint0_linear_2793_1638)" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear_2793_1638" x1="1.23706" y1="1.23694"
+                                            x2="13.735" y2="13.7444" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#1389FF" />
+                                            <stop offset="1" stop-color="#1DB4E7" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </a>
+                        </div>
+                        </div>
+                        <div class="handy"> 
+                            <div class="text">
+                                <p>${ele.craft}</p>
+                            </div>
+                            <div class="price">
+                                <p>${ele.discount_price}<del><span> ${ele.original_price}</span></del></p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+
+    `)
+    }).join('');
+}
+
+function filterProduct(type) {
+    let filtered = latest.filter(item => item.category === type);
+    updateUi(filtered);
+}
+
+// 4. ✅ CALL HERE (initial render)
+updateUi(latest);
+function viewDetailsHome_one(item) {
+
+    const product_show = latest.find((ele, idx) => item == idx);
+    localStorage.setItem("selectedProduct_two", JSON.stringify(product_show));
+}
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_left");
+localStorage.removeItem("selectedProduct_four");
+localStorage.removeItem("selectedProduct_three");
+localStorage.removeItem("selectedProduct_one");
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_shop");
+localStorage.removeItem("BlogProductDetail");
+
+
+
+const trending = [
+    {
+        img: "./Image/image 1171.svg",
+        chair_name: "Cantilever chair",
+        discount_price: "$ 26.00",
+        original_price: "$ 42.00"
+    },
+    {
+        img: "./Image/image 1170.svg",
+        chair_name: "Cantilever chair",
+        discount_price: "$ 26.00",
+        original_price: "$ 42.00"
+    },
+    {
+        img: "./Image/image 31.svg",
+        chair_name: "Cantilever chair",
+        discount_price: "$ 26.00",
+        original_price: "$ 42.00"
+    },
+    {
+        img: "./Image/image-c 32.svg",
+        chair_name: "Cantilever chair",
+        discount_price: "$ 26.00",
+        original_price: "$ 42.00"
+    }
+];
+
+function viewDetailsHome_two(index) {
+    console.log(index);
+    const product_trend = trending.find((show, pass) => index == pass);
+    localStorage.setItem("selectedProduct_three", JSON.stringify(product_trend));
+}
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_left");
+localStorage.removeItem("selectedProduct_four");
+localStorage.removeItem("selectedProduct_two");
+localStorage.removeItem("selectedProduct_one");
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_shop");
+localStorage.removeItem("BlogProductDetail");
+
+
+const TrendData = document.getElementById("trend");
+TrendData.innerHTML = trending?.map((show, pass) => {
+    return (
+        `
+                    <div class="product_sub"   onclick="viewDetailsHome_two('${pass}')">
+                        <a href="./product-detail.html" >
+                            <div class="bg_product">
+                                <img src="${show.img}" alt="Image is not found">
+                            </div>
+                            <div class="sub_detail">
+                                <p>${show.chair_name}</p>
+                                <p>${show.discount_price} <del>${show.original_price}</del></p>
+                            </div>
+                        </a>
+                    </div>
+               
+    `)
+}).join('');
+
+const Top = [
+    {
+        img: "./Image/image 20.svg",
+        name: "Mini LCW Chair",
+        original_price: "$ 56.00"
+    },
+    {
+        img: "./Image/image 1168.svg",
+        name: "Mini LCW Chair",
+        original_price: "$ 56.00"
+    },
+    {
+        img: "./Image/image 1171.svg",
+        name: "Mini LCW Chair",
+        original_price: "$ 56.00"
+    },
+    {
+        img: "./Image/image 20.svg",
+        name: "Mini LCW Chair",
+        original_price: "$ 56.00"
+    }
+];
+function viewDetailsHome_three(item) {
+    console.log(item);
+    const product_top = Top.find((index, pass) => item == pass);
+    localStorage.setItem("selectedProduct_four", JSON.stringify(product_top));
+}
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_left");
+localStorage.removeItem("selectedProduct_three");
+localStorage.removeItem("selectedProduct_two");
+localStorage.removeItem("selectedProduct_one");
+localStorage.removeItem("selectedProduct");
+localStorage.removeItem("selectedProduct_shop");
+localStorage.removeItem("BlogProductDetail");
+
+
+const TopData = document.getElementById("chair-properties");
+TopData.innerHTML = Top?.map((index, pass) => {
+    return (
+        `
+    <div class="chair_discription_one" onclick="viewDetailsHome_three('${pass}')">
+               
+                        <div class="chair_property_one">
+                            <div class="bg_img">
+                                <img src="${index.img}" id="top_image" alt="Image is not found">
+                                <div class="view_shop_btn">
+                                 <a href="./product-detail.html" >
+                                    <button type="submit">View Shop</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="chair_content_one">
+                                <p>${index.name}</p>
+                                <p>${index.original_price}</p>
+                            </div> 
+                        </div>
+                
+    </div>
+    `)
+}).join('');
+

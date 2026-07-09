@@ -1,0 +1,826 @@
+
+/* SHOP_LEFT */
+.shop-grid {
+    background-color: #F6F5FF;
+    height: 300px;
+    padding-left: 10%;
+    padding-top: 5%;
+}
+
+.grid_text h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #101750;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: black;
+    font-family: "Lato", sans-serif;
+}
+
+.menu a:hover {
+    color: #FB2E86;
+    text-decoration: none;
+}
+
+/*  */
+/* ACCEORIES */
+.acceories_main {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 80px;
+}
+
+.acceories {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    width: 70%;
+}
+
+.ecom_txt h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #151875;
+}
+
+.ecom_txt p {
+    color: #8A8FB9;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.ecom_search {
+    display: flex;
+    gap: 30px;
+}
+
+.ecom_search p {
+    color: #3F509E;
+}
+
+.per_page {
+    display: flex;
+    gap: 10px;
+}
+
+.per_page input {
+    height: 20px;
+    width: 50px;
+}
+
+.sort {
+    display: flex;
+    gap: 10px;
+}
+
+.match button {
+    background-color: transparent;
+    border: 1px solid #E7E6EF;
+    color: #8A8FB9;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.view_ecom {
+    display: flex;
+    gap: 10px;
+}
+
+.view_ecom img {
+    height: 15px;
+    padding-top: 5px;
+}
+
+.view_ecom input {
+    height: 20px;
+    width: 100px;
+}
+
+
+/* HERO */
+.hero_main{
+    display: flex;
+    justify-content: center;
+}
+.hero{
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    gap: 20px;
+    
+}
+/* BRAND */
+
+.sub_one{
+    width: 20%;
+}
+.product_brand p {
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.check_box_one {
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7E81A2;
+  }
+  
+  /* Style the checkbox */
+  .check_box_one input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #E5E0FC; /* ✅ Background when unchecked */
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  
+  /* When checked */
+  .check_box_one input[type="checkbox"]:checked {
+    background-color: #603EFF; /* ✅ Background when checked */
+  
+  }
+  
+  /* Optional: add checkmark */
+  .check_box_one input[type="checkbox"]::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: -2px;
+  }
+  
+  .check_box_one input[type="checkbox"]:checked::after {
+    display: block;
+  }
+/* TWO */
+.product_brand_two p {
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.check_box_two {
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7E81A2;
+  }
+  
+  /* Style the checkbox */
+  .check_box_two input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #FFDBF1; /* ✅ Background when unchecked */
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  
+  /* When checked */
+  .check_box_two input[type="checkbox"]:checked {
+    background-color: #FF3EB2; /* ✅ Background when checked */
+  
+  }
+  
+  /* Optional: add checkmark */
+  .check_box_two input[type="checkbox"]::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: -2px;
+  }
+  
+  .check_box_two input[type="checkbox"]:checked::after {
+    display: block;
+  }
+/* Three */
+.product_brand_three p {
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.check_box_three {
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7E81A2;
+  }
+  
+  /* Style the checkbox */
+  .check_box_three input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #FFF6DA; /* ✅ Background when unchecked */
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  
+  /* When checked */
+  .check_box_three input[type="checkbox"]:checked {
+    background-color: #FFCC2E; /* ✅ Background when checked */
+  
+  }
+  
+  /* Optional: add checkmark */
+  .check_box_three input[type="checkbox"]::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: -2px;
+  }
+  
+  .check_box_three input[type="checkbox"]:checked::after {
+    display: block;
+  }
+/* FOUR */
+.product_brand_four p {
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.check_box_four {
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7E81A2;
+  }
+  
+  /* Style the checkbox */
+  .check_box_four input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #FFDBF1; /* ✅ Background when unchecked */
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  
+  /* When checked */
+  .check_box_four input[type="checkbox"]:checked {
+    background-color: #FF3EB2; /* ✅ Background when checked */
+    border-color: #FF3EB2;
+  }
+  
+  /* Optional: add checkmark */
+  .check_box_four input[type="checkbox"]::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: -2px;
+  }
+  
+  .check_box_four input[type="checkbox"]:checked::after {
+    display: block;
+  }
+/* FIVE */
+.product_brand_five p {
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.check_box_five {
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #7E81A2;
+  }
+  
+  /* Style the checkbox */
+  .check_box_five input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: #FFDBF1; /* ✅ Background when unchecked */
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  
+  /* When checked */
+  .check_box_five input[type="checkbox"]:checked {
+    background-color: #FF3EB2; /* ✅ Background when checked */
+    border-color: #FF3EB2;
+  }
+  
+  /* Optional: add checkmark */
+  .check_box_five input[type="checkbox"]::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: -2px;
+  }
+  
+  .check_box_five input[type="checkbox"]:checked::after {
+    display: block;
+  }
+  
+/*  */
+.search_price{
+    margin-top: 15px;
+}
+.search_price input{
+    border-color: #BCBDDB;
+    border-radius: 3px;
+}
+/*  */
+.product_brand_six span{
+    color: 20px;
+    font-weight: 700;
+    color: #151875;
+    text-decoration: underline;
+}
+.sub_color{
+    display: flex;
+    gap: 15px;
+}
+.sub_color_one{
+    display: flex;
+    gap: 5px;
+}
+.blue_color{
+    background-color: #5E37FF;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+.sub_color_two{
+    display: flex;
+    gap: 5px;
+}
+.orange_color{
+    background-color: #FF9437;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+.sub_color_three{
+    display: flex;
+    gap: 5px;
+}
+.brown_color{
+    background-color: #FFBF95;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+.sub_color_four{
+    display: flex;
+    gap: 5px;
+}
+.green_color{
+    background-color: #33D221;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+.sub_color_five{
+    display: flex;
+    gap: 5px;
+}
+.purple_color{
+    background-color:#E248FF;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+.sub_color_six{
+    display: flex;
+    gap: 5px;
+}
+.sky_color{
+    background-color: #26CBFF;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+/*  */
+.ecom_acceories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 80%;
+    
+}
+#ecom a{
+    text-decoration: none;
+}
+.fashion_list {
+    display: flex;
+    justify-content: center;
+    width:100%;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+}
+ .ecom_acceories a{
+  text-decoration: none;
+}
+
+.fashion_name {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.fashion_name p {
+    color: #111C85;
+    font-size: 19.88px;
+    font-weight: 700;
+}
+
+.price {
+    color: #151875;
+}
+
+.price span,
+del {
+    color: #FB2E86;
+}
+
+.deal {
+    padding-top: 20px;
+}
+
+.colors {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+.color_one {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #DE9034;
+}
+
+.color_two {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #EC42A2;
+}
+
+.color_three {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #8568FF;
+}
+
+.fashion_discription p {
+    color: #9295AA;
+    font-size: 17.67px;
+    font-weight: 400;
+    font-family: "Lato", sans-serif;
+}
+
+.product_icon {
+    display: flex;
+    gap: 20px;
+}
+
+/*  */
+/*  */
+.client_image {
+    margin-top: 8%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+.client_image img{
+    width: 100%;
+}
+/*  */
+
+/*  */
+/* MEDIA QUERY = 4 */
+@media (max-width:1024px) {
+
+    .shop-grid{
+        padding-left: 8%;
+    }
+    .acceories{
+        width: 95%;
+    }
+    .hero{
+        width: 95%;
+    }
+    .footer{
+        gap: 20px;
+    }
+    .footer_main{
+        padding-inline-start: 25px;
+    }
+    .footer h3{
+        font-size: 22px;
+    }
+    .input-footer {
+        background-color: white;
+        width: 68%;
+    }
+}
+/* MEDIA QUERY = 3 */
+@media (max-width: 992px) {
+    .shop-grid{
+        padding-left: 6%;
+    }
+    .acceories{
+        width: 100%;
+        gap: 10px;
+    }
+    .ecom_search{
+        gap: 10px;
+    }
+    .hero{
+        width: 95%;
+       
+    }
+    .footer{
+        gap: 30px;
+    }
+    .footer_main {
+        padding-inline-start: 10px;
+    }
+
+    .footer_main {
+        padding-inline-start: 10px;
+    }
+
+    .footer_sub_one h1 {
+        font-size: 30px;
+    }
+
+    .footer h3 {
+        font-size: 16px;
+    }
+
+    .footer li,
+    p {
+        font-size: 12px;
+    }
+    .input-footer {
+        background-color: white;
+        width: 89%;
+    }
+
+}
+/*  MEDIA QUERY = 2 */
+@media (max-width:768px) {
+    .shop-grid {
+        height: 200px;
+    }
+
+    .acceories {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .ecom_txt h2 {
+        font-size: 16px;
+    }
+
+    .ecom_search p {
+        font-size: 12px;
+    }
+
+    .ecom_search {
+        gap: 10px;
+    }
+    .hero{
+        width: 95%;
+        gap: 20px;
+    }
+    .fashion_list{
+        flex-direction: column;
+        width: 80%;
+    }
+    .fashion_img img{
+        width: 100%;
+    }
+    .deal{
+        padding-top: 0;
+    }
+    .client_image img {
+        width: 100%;
+    }
+    .footer{
+        gap: 20px;
+    }
+    .footer_main {
+        padding-inline-start: 10px;
+    }
+
+    .footer_main {
+        padding-inline-start: 10px;
+    }
+
+    .footer_sub_one h1 {
+        font-size: 30px;
+    }
+
+    .footer h3 {
+        font-size: 16px;
+    }
+
+    .footer li,
+    p {
+        font-size: 12px;
+    }
+    .input-footer {
+        background-color: white;
+        width: 90%;
+    }
+}
+/* MEDIA QUERY = 1*/
+@media (max-width:576px) {
+    .main-headder {
+        flex-direction: column;
+    }
+    .form-group{
+        width: 90%;
+    }
+  
+    .search_icon{
+        height: 39px;
+        width: 20%;
+    }
+    .compny_name h1 {
+        font-size: 30px;
+    }
+
+    .shop-grid {
+        padding-left: 0;
+        padding: 30px;
+        height: auto;
+    }
+
+    .ecom_txt h2 {
+        font-size: 14px;
+    }
+
+    .ecom_txt p {
+        font-size: 10px;
+    }
+
+    .ecom_search p {
+        font-size: 12px;
+    }
+
+    .acceories {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ecom_search {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .hero{
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+    }
+    .ecom_acceories{
+        width: 90%;
+    }
+    .fashion_list{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+    }
+    .client_image img {
+        width: 100%;
+    }
+
+    .footer {
+        flex-direction: column;
+
+    }
+    .footer h3{
+        font-size: 24px;
+    }
+    .footer a{
+        font-size: 18px;
+    }
+    .footer_main {
+        padding-inline-start: 30px;
+    }
+    .fashion_discription p{
+        font-size: 15px;
+    }
+    .input-footer {
+        background-color: white;
+        width: 90%;
+    }
+}
+/*  */
+
+* Base styling */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+/* Dropdown hidden by default */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    list-style: none;
+    padding: 10px 0;
+    display: none;
+    min-width: 150px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu li {
+    padding: 8px 15px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Optional hover effect */
+.dropdown-menu li:hover {
+    background: #f0f0f0;
+}
+.fashion_img {
+    overflow: hidden; /* VERY IMPORTANT */
+}
+
+.fashion_img img {
+    width: 100%;
+    transition: transform 0.4s ease;
+}
+
+/* 🔥 IMAGE ZOOM ON CARD HOVER */
+.fashion_list:hover .fashion_img img {
+    transform: scale(1.2);
+}
