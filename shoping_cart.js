@@ -26,12 +26,6 @@ function saveCart(cart) {
 
 // ➕ Add to cart
 function addToCart(product, redirect = true) {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (!user) {
-        alert("Please login first");
-        window.location.href = "./My_account.html";
-        return;
-    }
     let cart = getCart();
 
     const name = product.title || product.name || "Unknown Product";

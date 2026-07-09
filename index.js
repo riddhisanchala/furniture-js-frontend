@@ -59,15 +59,6 @@ function isInWishlist(id) {
 
 // ✅ Toggle wishlist
 function toggleWishlist(product, el) {
-    const user = getCurrentUser();
-
-    // 🔐 login check
-    if (!user) {
-        alert("Please login first");
-        window.location.href = "./My_account.html";
-        return;
-    }
-
     let wishlist = getWishlist();
 
     const index = wishlist.findIndex(item =>

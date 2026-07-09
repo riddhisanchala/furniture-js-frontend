@@ -1,27 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 🛑 Skip auth check on login page
     const currentPage = window.location.pathname;
 
-    if (currentPage.includes("My_account.html")) {
-        return;
+    // 🛑 Store last page to redirect back after login (skipping login/signup pages)
+    if (!currentPage.includes("My_account.html") && !currentPage.includes("signup.html")) {
+        sessionStorage.setItem("redirectAfterLogin", window.location.href);
     }
 
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    // ❌ Not logged in
-    if (!user || !user.email) {
+    // ✅ If logged in, set user info
+    if (user && user.email) {
+        const emailEl = document.getElementById("userEmail");
+        const nameEl = document.getElementById("userName");
 
-        sessionStorage.setItem("redirectAfterLogin", window.location.href);
-
-        window.location.href = "./My_account.html";
-        return;
+        if (emailEl) emailEl.textContent = user.email;
+        if (nameEl) nameEl.textContent = user.name || "User";
     }
-
-    // ✅ Optional: set user info
-    const emailEl = document.getElementById("userEmail");
-    const nameEl = document.getElementById("userName");
-
-    if (emailEl) emailEl.textContent = user.email;
-    if (nameEl) nameEl.textContent = user.name || "User";
 });
